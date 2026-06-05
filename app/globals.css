@@ -4,7 +4,7 @@
   --bg-primary: #0f1a0d;
   --bg-surface: #1a2e18;
   --bg-panel: #162614;
-  --bg-nav: #1f3219;
+  --bg-nav: #3d6642;
   --text-primary: #faf7f2;
   --text-secondary: #cec2a8;
   --accent: #d2c2a4;
@@ -35,17 +35,17 @@ body {
 
 /* ── Airport pill markers (iOS style) ── */
 .airport-marker {
-  background: #2a5438;
+  background: #ede8da;
   border-radius: 12px;
   padding: 5px 11px;
-  color: #fdfcf8;
+  color: #1a2e18;
   font-size: 12px;
   font-weight: 700;
   font-family: ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   user-select: none;
   transform: translate(-50%, -50%);
   transition: transform 0.12s, background 0.12s;
@@ -53,7 +53,7 @@ body {
 }
 
 .airport-marker:hover {
-  background: #3a6e4a;
+  background: #ddd8c8;
   transform: translate(-50%, -50%) scale(1.07);
 }
 
