@@ -8,6 +8,7 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  icons: { icon: '/favicon.png' },
   title: 'Fieldsite — The world of general aviation',
   description:
     'Discover airports, share field notes, and connect with pilots. Fieldsite is the social app for general aviation.',
