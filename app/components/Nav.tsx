@@ -11,21 +11,6 @@ const TABS = [
   { label: 'PRIVACY POLICY', href: '/privacy' },
 ]
 
-function WindsockIcon() {
-  return (
-    <svg viewBox="0 0 36 36" width="36" height="36" fill="none" aria-hidden="true">
-      {/* Vertical pole */}
-      <line x1="8" y1="2" x2="8" y2="34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      {/* Horizontal arm */}
-      <line x1="8" y1="6" x2="20" y2="6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      {/* Windsock body */}
-      <path d="M20 4 L34 8 L30 16 L20 16 Z" fill="currentColor" opacity="0.85" />
-      {/* Stripes */}
-      <line x1="25" y1="4.8" x2="23.5" y2="15.2" stroke="white" strokeWidth="1.2" opacity="0.3" strokeLinecap="round" />
-      <line x1="30" y1="6.5" x2="27.5" y2="15.5" stroke="white" strokeWidth="1.2" opacity="0.3" strokeLinecap="round" />
-    </svg>
-  )
-}
 
 export default function Nav() {
   const pathname = usePathname()
@@ -37,16 +22,17 @@ export default function Nav() {
   return (
     <header style={{ background: 'var(--bg-nav)', borderBottom: '1px solid var(--border)' }}>
       <div
-        style={{ maxWidth: 1440, margin: '0 auto', padding: '0 24px', height: 64 }}
+        style={{ maxWidth: 1440, margin: '0 auto', padding: '0 24px', height: 64, position: 'relative' }}
         className="flex items-center justify-between gap-6"
       >
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 shrink-0 hover:opacity-80 transition-opacity"
-          style={{ color: '#fdfcf8' }}
+          className="flex items-center gap-0 shrink-0 justify-center"
+          style={{ color: '#fdfcf8', width: 336, marginLeft: -24 }}
         >
-          <WindsockIcon />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/windsock.png" alt="" width={92} height={92} style={{ filter: 'invert(1)', objectFit: 'contain', mixBlendMode: 'lighten' }} />
           <span
             className="font-semibold text-sm"
             style={{ letterSpacing: '0.22em', textTransform: 'uppercase' }}
@@ -56,7 +42,7 @@ export default function Nav() {
         </Link>
 
         {/* Desktop tabs */}
-        <nav className="hidden lg:flex items-end gap-0 flex-1 justify-center" style={{ height: 64 }}>
+        <nav className="hidden lg:flex items-end gap-0" style={{ height: 64, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
           {TABS.map((tab) => (
             <Link
               key={tab.href}
