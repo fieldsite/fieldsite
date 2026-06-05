@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { supabase } from '../lib/supabase'
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!
 
@@ -35,12 +34,6 @@ function getFlightCat(m: MetarRaw): string | undefined {
   return m.flightCategory ?? m.flight_category
 }
 
-interface Post {
-  id: string
-  content: string | null
-  created_at: string | null
-}
-
 const FLTCAT_COLORS: Record<string, string> = {
   VFR: '#2d6a4f',
   MVFR: '#1d6fa4',
@@ -49,14 +42,6 @@ const FLTCAT_COLORS: Record<string, string> = {
 }
 
 type MapStyle = 'dark-v11' | 'light-v11'
-
-function timeAgo(iso: string) {
-  const diff = Date.now() - new Date(iso).getTime()
-  const h = Math.floor(diff / 3600000)
-  if (h < 1) return `${Math.floor(diff / 60000)}m ago`
-  if (h < 24) return `${h}h ago`
-  return `${Math.floor(h / 24)}d ago`
-}
 
 function addRadarToMap(map: mapboxgl.Map, visible: boolean) {
   if (!map.getSource('nexrad')) {
@@ -88,7 +73,7 @@ function styleAirportLayers(map: mapboxgl.Map) {
   }
 }
 
-const TIER_MIN_ZOOM: Record<number, number> = { 1: 0, 2: 7, 3: 9 }
+const TIER_MIN_ZOOM: Record<number, number> = { 1: 0, 2: 7, 3: 8 }
 
 function buildRefreshMarkers(
   map: mapboxgl.Map,
@@ -305,12 +290,10 @@ function MapOptionsPanel({
 
 function AirportCard({ airport, onClose }: { airport: Airport; onClose: () => void }) {
   const [metar, setMetar] = useState<MetarRaw | null>(null)
-  const [posts, setPosts] = useState<Post[]>([])
   const [metarLoading, setMetarLoading] = useState(true)
 
   useEffect(() => {
     setMetar(null)
-    setPosts([])
     setMetarLoading(true)
 
     fetch(`/api/metar?icao=${airport.icao}`)
@@ -318,13 +301,6 @@ function AirportCard({ airport, onClose }: { airport: Airport; onClose: () => vo
       .then((data: MetarRaw[]) => { if (data?.[0]) setMetar(data[0]) })
       .catch(() => {})
       .finally(() => setMetarLoading(false))
-
-    supabase
-      .from('posts')
-      .select('id, content, created_at')
-      .order('created_at', { ascending: false })
-      .limit(3)
-      .then(({ data }) => { if (data) setPosts(data as Post[]) })
   }, [airport.icao])
 
   const windStr = metar?.wdir != null && metar?.wspd != null
@@ -332,7 +308,7 @@ function AirportCard({ airport, onClose }: { airport: Airport; onClose: () => vo
     : null
   const visStr = metar?.visib ? `${metar.visib}SM` : null
   const cloudStr = metar?.clouds?.length ? `${metar.clouds[0].cover}${metar.clouds[0].base}` : null
-  const altStr = metar?.altim ? `${metar.altim.toFixed(2)}"` : null
+  const altStr = metar?.altim ? `${(metar.altim / 33.8639).toFixed(2)}"` : null
   const metarParts = [windStr, visStr, cloudStr, altStr].filter(Boolean)
 
   return (
@@ -399,27 +375,6 @@ function AirportCard({ airport, onClose }: { airport: Airport; onClose: () => vo
         )}
       </div>
 
-      {posts.length > 0 && (
-        <>
-          <div style={{ borderTop: '1px solid rgba(245,240,232,0.07)', margin: '0 0 10px' }} />
-          <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 12 }}>
-            {posts.map(post => (
-              <div key={post.id}>
-                <p style={{
-                  fontSize: 12, color: '#ddd2bc', margin: '0 0 2px', lineHeight: 1.4,
-                  display: '-webkit-box', WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical', overflow: 'hidden',
-                }}>
-                  {post.content ?? 'Field note'}
-                </p>
-                {post.created_at && (
-                  <span style={{ fontSize: 10, color: '#5a6a50' }}>{timeAgo(post.created_at)}</span>
-                )}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
 
       <div style={{ borderTop: '1px solid rgba(245,240,232,0.07)' }}>
         <a
@@ -485,8 +440,10 @@ export default function MapboxMap() {
         const res = await fetch('/api/airports')
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const geojson = await res.json() as {
+          type: 'FeatureCollection'
           features: Array<{
-            geometry: { coordinates: [number, number] }
+            type: 'Feature'
+            geometry: { type: 'Point'; coordinates: [number, number] }
             properties: { icao: string; label: string; name: string; city: string; state: string; towered: boolean; tier: number }
           }>
         }
@@ -509,7 +466,7 @@ export default function MapboxMap() {
           data: geojson as GeoJSON.FeatureCollection,
         })
 
-        const tierMinZooms: [number, number][] = [[1, 0], [2, 7], [3, 9]]
+        const tierMinZooms: [number, number][] = [[1, 0], [2, 7], [3, 9]] // rings appear 1 zoom after tier 3 pins
         for (const [tier, minZoom] of tierMinZooms) {
           map.addLayer({
             id: `airport-ring-${tier}`,
@@ -540,12 +497,7 @@ export default function MapboxMap() {
 
       // Post markers
       try {
-        const { data: posts } = await supabase
-          .from('posts')
-          .select('id, content, latitude, longitude')
-          .not('latitude', 'is', null)
-          .not('longitude', 'is', null)
-          .limit(200)
+        const posts = await fetch('/api/map-posts').then(r => r.json())
 
         if (posts) {
           for (const post of posts) {
