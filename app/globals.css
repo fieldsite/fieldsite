@@ -1,26 +1,197 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #0f1a0d;
+  --bg-surface: #1a2e18;
+  --bg-panel: #162614;
+  --bg-nav: #1f3219;
+  --text-primary: #faf7f2;
+  --text-secondary: #cec2a8;
+  --accent: #d2c2a4;
+  --border: rgba(245, 240, 232, 0.07);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-surface: var(--bg-surface);
+  --color-panel: var(--bg-panel);
+  --color-accent: var(--accent);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* ── Airport pill markers (iOS style) ── */
+.airport-marker {
+  background: #2a5438;
+  border-radius: 12px;
+  padding: 5px 11px;
+  color: #fdfcf8;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s, background 0.12s;
+  letter-spacing: 0.02em;
+}
+
+.airport-marker:hover {
+  background: #3a6e4a;
+  transform: translate(-50%, -50%) scale(1.07);
+}
+
+/* ── Post markers ── */
+.post-marker {
+  width: 10px;
+  height: 10px;
+  background: #52a87c;
+  border: 2px solid #e8f0ec;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(82, 168, 124, 0.25);
+}
+
+/* ── Mapbox popup ── */
+.mapboxgl-popup-content {
+  background: #0f1a0d !important;
+  border: 1px solid #1e3830 !important;
+  border-radius: 12px !important;
+  color: #e8f0ec !important;
+  padding: 0 !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7) !important;
+  min-width: 260px;
+  overflow: hidden;
+}
+
+.mapboxgl-popup-tip { display: none !important; }
+
+.mapboxgl-popup-close-button {
+  color: #6b8a7c !important;
+  font-size: 20px !important;
+  top: 8px !important;
+  right: 10px !important;
+  z-index: 1;
+  background: rgba(14, 26, 22, 0.7) !important;
+  border-radius: 50% !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.mapboxgl-popup-close-button:hover {
+  color: #e8f0ec !important;
+  background: rgba(82, 168, 124, 0.2) !important;
+}
+
+.airport-popup { }
+
+.popup-body { padding: 14px 16px 16px; }
+
+.popup-icao {
+  font-size: 11px;
+  font-weight: 600;
+  color: #52a87c;
+  letter-spacing: 0.1em;
+  font-family: ui-monospace, monospace;
+  margin-bottom: 3px;
+}
+
+.popup-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8f0ec;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.popup-location {
+  font-size: 12px;
+  color: #6b8a7c;
+  margin-bottom: 10px;
+}
+
+.popup-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.popup-tags .tag {
+  background: #162420;
+  border: 1px solid #2a4a3e;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: #7fa896;
+  font-weight: 500;
+}
+
+.popup-view-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #1a3028;
+  border: 1px solid #2a4a3e;
+  border-radius: 8px;
+  color: #e8f0ec;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.popup-view-btn:hover {
+  background: #52a87c;
+  color: #0c1714;
+  border-color: #52a87c;
+}
+
+
+
+/* ── Mapbox controls ── */
+.mapboxgl-ctrl-group {
+  background: #0e1a16 !important;
+  border: 1px solid #2a4a3e !important;
+  border-radius: 8px !important;
+}
+
+.mapboxgl-ctrl-group button {
+  background: transparent !important;
+  color: #ffffff !important;
+  border-bottom-color: #2a4a3e !important;
+}
+
+.mapboxgl-ctrl-group button:hover { background: #162420 !important; }
+
+.mapboxgl-ctrl-attrib {
+  background: rgba(10, 18, 15, 0.7) !important;
+  color: #6b8a7c !important;
+  border-radius: 4px !important;
+}
+
+.mapboxgl-ctrl-attrib a { color: #52a87c !important; }
+
+.mapboxgl-ctrl-logo { opacity: 0.5 !important; }
