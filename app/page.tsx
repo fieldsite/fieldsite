@@ -131,7 +131,7 @@ export default function Home() {
   return (
     <>
       {/* ── Outer: everything fits in one viewport ── */}
-      <div style={{ height: 'calc(var(--vh, 100svh) - 4rem)', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: 'calc(var(--vh, 100svh) - 4rem)', display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}>
 
       {/* ── Hero: map + panel ── */}
       <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
@@ -167,28 +167,15 @@ export default function Home() {
 
       {/* ── Bottom dock bar ── */}
       <section style={{ background: '#ede8da', borderTop: '1px solid #ddd8cc', flexShrink: 0 }}>
+        {/* Desktop layout */}
         <div
-          style={{
-            maxWidth: 1440,
-            margin: '0 auto',
-            padding: '1.75rem 2rem',
-            display: 'grid',
-            gridTemplateColumns: '220px 1fr auto',
-            gap: '1.5rem',
-            alignItems: 'center',
-          }}
+          className="hidden lg:grid"
+          style={{ maxWidth: 1440, margin: '0 auto', padding: '1.75rem 2rem', gridTemplateColumns: '220px 1fr auto', gap: '1.5rem', alignItems: 'center' }}
         >
-          {/* Left: tagline */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: '#1a3028', lineHeight: 1.3, margin: 0 }}>
-              A community that loves aviation as much as you do.
-            </p>
-            <p style={{ fontSize: 13, fontStyle: 'italic', color: '#4d7a40', margin: 0, fontWeight: 500 }}>
-              See you out there.
-            </p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: '#1a3028', lineHeight: 1.3, margin: 0 }}>A community that loves aviation as much as you do.</p>
+            <p style={{ fontSize: 13, fontStyle: 'italic', color: '#4d7a40', margin: 0, fontWeight: 500 }}>See you out there.</p>
           </div>
-
-          {/* Center: 4 feature columns */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
             {[
               { icon: <ExploreIcon />, title: 'EXPLORE', text: 'Discover airports, FBOs, and points of interest.' },
@@ -196,39 +183,46 @@ export default function Home() {
               { icon: <ShareIcon />, title: 'SHARE', text: 'Contribute photos and updates for fellow pilots.' },
               { icon: <ConnectIcon />, title: 'CONNECT', text: 'Join a growing community of pilots.' },
             ].map((f) => (
-              <div
-                key={f.title}
-                style={{
-                  padding: '0 1.25rem',
-                  borderLeft: '1px solid #d0c8bc',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.4rem',
-                }}
-              >
+              <div key={f.title} style={{ padding: '0 1.25rem', borderLeft: '1px solid #d0c8bc', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 <div style={{ color: '#3a5838' }}>{f.icon}</div>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: '#1a3028' }}>
-                  {f.title}
-                </div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: '#1a3028' }}>{f.title}</div>
                 <p style={{ fontSize: 11, color: '#5a7060', lineHeight: 1.45, margin: 0 }}>{f.text}</p>
               </div>
             ))}
           </div>
-
-          {/* Right: copyright + links */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
-            <span style={{ fontSize: 11, color: '#6a7a68' }}>
-              © {new Date().getFullYear()} Fieldsite
-            </span>
+            <span style={{ fontSize: 11, color: '#6a7a68' }}>© {new Date().getFullYear()} Fieldsite</span>
             <div style={{ display: 'flex', gap: '1rem' }}>
-              {[
-                { label: 'Privacy', href: '/privacy' },
-                { label: 'Contact', href: '/contact' },
-                { label: 'Download', href: '/download' },
-              ].map(({ label, href }) => (
-                <Link key={href} href={href} style={{ fontSize: 11, color: '#6a7a68', textDecoration: 'none' }}>
-                  {label}
-                </Link>
+              {[{ label: 'Privacy', href: '/privacy' }, { label: 'Contact', href: '/contact' }, { label: 'Download', href: '/download' }].map(({ label, href }) => (
+                <Link key={href} href={href} style={{ fontSize: 11, color: '#6a7a68', textDecoration: 'none' }}>{label}</Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile layout */}
+        <div className="lg:hidden" style={{ padding: '1.25rem 1.25rem 1rem' }}>
+          <p style={{ fontSize: 13, fontWeight: 700, color: '#1a3028', margin: '0 0 0.15rem' }}>A community that loves aviation as much as you do.</p>
+          <p style={{ fontSize: 13, fontStyle: 'italic', color: '#4d7a40', margin: '0 0 1rem', fontWeight: 500 }}>See you out there.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
+            {[
+              { icon: <ExploreIcon />, title: 'EXPLORE', text: 'Discover airports, FBOs, and points of interest.' },
+              { icon: <FieldNotesIcon />, title: 'FIELD NOTES', text: 'Read real pilot notes from the community.' },
+              { icon: <ShareIcon />, title: 'SHARE', text: 'Contribute photos and updates for fellow pilots.' },
+              { icon: <ConnectIcon />, title: 'CONNECT', text: 'Join a growing community of pilots.' },
+            ].map((f) => (
+              <div key={f.title} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                <div style={{ color: '#3a5838' }}>{f.icon}</div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: '#1a3028' }}>{f.title}</div>
+                <p style={{ fontSize: 11, color: '#5a7060', lineHeight: 1.45, margin: 0 }}>{f.text}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop: '1px solid #d0c8bc', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 11, color: '#6a7a68' }}>© {new Date().getFullYear()} Fieldsite</span>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              {[{ label: 'Privacy', href: '/privacy' }, { label: 'Contact', href: '/contact' }, { label: 'Download', href: '/download' }].map(({ label, href }) => (
+                <Link key={href} href={href} style={{ fontSize: 11, color: '#6a7a68', textDecoration: 'none' }}>{label}</Link>
               ))}
             </div>
           </div>
