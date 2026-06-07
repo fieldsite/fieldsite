@@ -31,8 +31,11 @@ export default function Nav() {
           className="flex items-center gap-0 shrink-0 justify-center"
           style={{ color: '#fdfcf8', width: 336, marginLeft: -24 }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/windsock.png" alt="" width={92} height={92} style={{ objectFit: 'contain' }} />
+          <svg width="92" height="92" viewBox="100 230 600 580" fill="none" stroke="#fdfcf8" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="400" y1="270" x2="400" y2="760" />
+            <ellipse cx="400" cy="395" rx="52" ry="108" />
+            <path d="M400 287 Q560 310 750 390 Q760 420 750 450 Q560 480 400 503" />
+          </svg>
           <span
             className="font-semibold text-sm"
             style={{ letterSpacing: '0.22em', textTransform: 'uppercase' }}
