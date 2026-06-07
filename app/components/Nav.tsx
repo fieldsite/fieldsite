@@ -25,10 +25,10 @@ export default function Nav() {
         style={{ maxWidth: 1440, margin: '0 auto', padding: '0 24px', height: 64, position: 'relative' }}
         className="flex items-center justify-between gap-6"
       >
-        {/* Logo */}
+        {/* Logo — desktop: paired with text, centered over sidebar */}
         <Link
           href="/"
-          className="flex items-center gap-0 shrink-0 justify-center"
+          className="hidden lg:flex items-center gap-0 shrink-0 justify-center"
           style={{ color: '#fdfcf8', width: 336, marginLeft: -24 }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -40,6 +40,22 @@ export default function Nav() {
             Fieldsite
           </span>
         </Link>
+
+        {/* Logo — mobile: icon far left, text centered */}
+        <Link
+          href="/"
+          className="lg:hidden shrink-0"
+          style={{ color: '#fdfcf8' }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/windsock2.png" alt="" width={52} height={52} style={{ objectFit: 'contain', display: 'block' }} />
+        </Link>
+        <span
+          className="lg:hidden font-semibold text-sm absolute left-1/2 -translate-x-1/2"
+          style={{ letterSpacing: '0.22em', textTransform: 'uppercase', color: '#fdfcf8' }}
+        >
+          Fieldsite
+        </span>
 
         {/* Desktop tabs */}
         <nav className="hidden lg:flex items-end gap-0" style={{ height: 64, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>

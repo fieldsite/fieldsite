@@ -1,6 +1,3 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import MapboxMapWrapper from './components/MapboxMapWrapper'
 
@@ -131,8 +128,6 @@ function SidebarContent() {
 }
 
 export default function Home() {
-  const [mobileOpen, setMobileOpen] = useState(false)
-
   return (
     <>
       {/* ── Outer: everything fits in one viewport ── */}
@@ -168,94 +163,6 @@ export default function Home() {
           <SidebarContent />
         </aside>
 
-        {/* ── Mobile sidebar (hidden on lg+) ── */}
-
-        {/* Hamburger button — always visible on mobile */}
-        <button
-          className="lg:hidden"
-          onClick={() => setMobileOpen(true)}
-          style={{
-            position: 'absolute',
-            top: 16,
-            left: 16,
-            zIndex: 30,
-            background: 'rgba(15, 35, 24, 0.92)',
-            backdropFilter: 'blur(6px)',
-            border: '1px solid rgba(237, 232, 218, 0.15)',
-            borderRadius: 10,
-            width: 42,
-            height: 42,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fdfcf8',
-            cursor: 'pointer',
-          }}
-          aria-label="Open menu"
-        >
-          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M3 6h14M3 10h14M3 14h14" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        {/* Backdrop */}
-        {mobileOpen && (
-          <div
-            className="lg:hidden"
-            onClick={() => setMobileOpen(false)}
-            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 40 }}
-          />
-        )}
-
-        {/* Slide-in panel */}
-        <aside
-          className="lg:hidden"
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            width: 'min(300px, calc(100% - 56px))',
-            background: 'rgba(15, 35, 24, 0.97)',
-            backdropFilter: 'blur(8px)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '2rem 1.5rem',
-            boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
-            zIndex: 50,
-            overflowY: 'auto',
-            transform: mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
-            transition: 'transform 0.3s ease',
-          }}
-        >
-          {/* Close button */}
-          <button
-            onClick={() => setMobileOpen(false)}
-            style={{
-              position: 'absolute',
-              top: 14,
-              right: 14,
-              background: 'rgba(237, 232, 218, 0.1)',
-              border: 'none',
-              borderRadius: 8,
-              width: 34,
-              height: 34,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fdfcf8',
-              cursor: 'pointer',
-            }}
-            aria-label="Close menu"
-          >
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />
-            </svg>
-          </button>
-
-          <SidebarContent />
-        </aside>
       </div>
 
       {/* ── Bottom dock bar ── */}
