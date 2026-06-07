@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import MapboxMapWrapper from './components/MapboxMapWrapper'
 
@@ -74,22 +77,77 @@ function WindsockBig() {
   )
 }
 
+function SidebarContent() {
+  return (
+    <>
+      {/* Top half */}
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
+        {/* Tagline */}
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#eedfc8', margin: 0, textAlign: 'center' }}>
+          Explore.&nbsp; Discover.&nbsp; Share.
+        </p>
+
+        {/* Heading + subheading */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 3vw, 2.375rem)', fontWeight: 800, lineHeight: 1.1, color: '#fdfcf8', margin: 0, letterSpacing: '-0.02em' }}>
+            Every airport<br />has a story.
+          </h1>
+          <p style={{ fontSize: 14, lineHeight: 1.65, color: '#d8cbb3', margin: 0 }}>Share yours...</p>
+        </div>
+
+        {/* Buttons */}
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+          <a
+            href="https://apps.apple.com/app/fieldsite/id6745740360"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 18px', borderRadius: 8, border: '1.5px solid rgba(250, 247, 240, 0.15)', color: '#1f3219', fontSize: 13, fontWeight: 600, textDecoration: 'none', background: '#fdfcf8' }}
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>
+            Download the App
+          </a>
+          <a
+            href="/about"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 13px', borderRadius: 8, border: '1.5px solid rgba(232, 217, 190, 0.45)', color: '#eedfc8', fontSize: 11, fontWeight: 600, textDecoration: 'none', background: 'rgba(200, 184, 154, 0.07)' }}
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      {/* Bottom half */}
+      <div style={{ borderTop: '1px solid rgba(237, 232, 218, 0.12)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: '#d8cbb3', margin: 0 }}>
+          Fieldsite is a community built for pilots. Discover airports, share field notes, and connect with fellow aviators across the country.
+        </p>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: '#d8cbb3', margin: 0 }}>
+          Every airport has a story.<br /><br />Find yours.
+        </p>
+      </div>
+    </>
+  )
+}
+
 export default function Home() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
     <>
       {/* ── Outer: everything fits in one viewport ── */}
       <div style={{ height: 'calc(var(--vh, 100svh) - 4rem)', display: 'flex', flexDirection: 'column' }}>
 
       {/* ── Hero: map + panel ── */}
-      <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}
-      >
+      <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
         {/* Map fills entire hero */}
         <div style={{ position: 'absolute', inset: 0 }}>
           <MapboxMapWrapper />
         </div>
 
-        {/* Left panel overlay — floating card */}
+        {/* ── Desktop sidebar (lg+) ── */}
         <aside
+          className="hidden lg:flex"
           style={{
             position: 'absolute',
             left: 24,
@@ -99,7 +157,6 @@ export default function Home() {
             background: 'rgba(15, 35, 24, 0.92)',
             backdropFilter: 'blur(6px)',
             borderRadius: 16,
-            display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
             padding: '2rem 1.6rem',
@@ -108,99 +165,96 @@ export default function Home() {
             overflowY: 'auto',
           }}
         >
-          {/* Top half */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
-            {/* Tagline */}
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#eedfc8',
-                margin: 0,
-                textAlign: 'center',
-              }}
-            >
-              Explore.&nbsp; Discover.&nbsp; Share.
-            </p>
+          <SidebarContent />
+        </aside>
 
-            {/* Heading + subheading grouped */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <h1
-                style={{
-                  fontSize: 'clamp(1.75rem, 3vw, 2.375rem)',
-                  fontWeight: 800,
-                  lineHeight: 1.1,
-                  color: '#fdfcf8',
-                  margin: 0,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                Every airport<br />has a story.
-              </h1>
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: '#d8cbb3', margin: 0 }}>
-                Share yours...
-              </p>
-            </div>
+        {/* ── Mobile sidebar (hidden on lg+) ── */}
 
-            {/* Buttons */}
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-              <a
-                href="https://apps.apple.com/app/fieldsite/id6745740360"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '10px 18px',
-                  borderRadius: 8,
-                  border: '1.5px solid rgba(250, 247, 240, 0.15)',
-                  color: '#1f3219',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  transition: 'border-color 0.15s, background 0.15s',
-                  background: '#fdfcf8',
-                }}
-              >
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                </svg>
-                Download the App
-              </a>
-              <Link
-                href="/about"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '7px 13px',
-                  borderRadius: 8,
-                  border: '1.5px solid rgba(232, 217, 190, 0.45)',
-                  color: '#eedfc8',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  background: 'rgba(200, 184, 154, 0.07)',
-                  transition: 'background 0.15s',
-                }}
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
+        {/* Hamburger button — always visible on mobile */}
+        <button
+          className="lg:hidden"
+          onClick={() => setMobileOpen(true)}
+          style={{
+            position: 'absolute',
+            top: 16,
+            left: 16,
+            zIndex: 30,
+            background: 'rgba(15, 35, 24, 0.92)',
+            backdropFilter: 'blur(6px)',
+            border: '1px solid rgba(237, 232, 218, 0.15)',
+            borderRadius: 10,
+            width: 42,
+            height: 42,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fdfcf8',
+            cursor: 'pointer',
+          }}
+          aria-label="Open menu"
+        >
+          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M3 6h14M3 10h14M3 14h14" strokeLinecap="round" />
+          </svg>
+        </button>
 
-          {/* Bottom half — app description */}
-          <div style={{ borderTop: '1px solid rgba(237, 232, 218, 0.12)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            <p style={{ fontSize: 13, lineHeight: 1.7, color: '#d8cbb3', margin: 0 }}>
-              Fieldsite is a community built for pilots. Discover airports, share field notes, and connect with fellow aviators across the country.
-            </p>
-            <p style={{ fontSize: 13, lineHeight: 1.7, color: '#d8cbb3', margin: 0 }}>
-              Every airport has a story.<br /><br />Find yours.
-            </p>
-          </div>
+        {/* Backdrop */}
+        {mobileOpen && (
+          <div
+            className="lg:hidden"
+            onClick={() => setMobileOpen(false)}
+            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 40 }}
+          />
+        )}
+
+        {/* Slide-in panel */}
+        <aside
+          className="lg:hidden"
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: 'min(300px, calc(100% - 56px))',
+            background: 'rgba(15, 35, 24, 0.97)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: '2rem 1.5rem',
+            boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
+            zIndex: 50,
+            overflowY: 'auto',
+            transform: mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
+            transition: 'transform 0.3s ease',
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 14,
+              right: 14,
+              background: 'rgba(237, 232, 218, 0.1)',
+              border: 'none',
+              borderRadius: 8,
+              width: 34,
+              height: 34,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#fdfcf8',
+              cursor: 'pointer',
+            }}
+            aria-label="Close menu"
+          >
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />
+            </svg>
+          </button>
+
+          <SidebarContent />
         </aside>
       </div>
 
