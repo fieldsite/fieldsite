@@ -32,7 +32,7 @@ export default function Nav() {
           style={{ color: '#fdfcf8', width: 336, marginLeft: -24 }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/windsock.png" alt="" width={92} height={92} style={{ filter: 'invert(1)', objectFit: 'contain', mixBlendMode: 'screen' }} />
+          <img src="/windsock.png" alt="" width={92} height={92} style={{ filter: 'invert(1)', objectFit: 'contain' }} />
           <span
             className="font-semibold text-sm"
             style={{ letterSpacing: '0.22em', textTransform: 'uppercase' }}
