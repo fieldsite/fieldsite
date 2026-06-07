@@ -200,32 +200,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile layout */}
-        <div className="lg:hidden" style={{ padding: '1.25rem 1.25rem 1rem' }}>
-          <p style={{ fontSize: 13, fontWeight: 700, color: '#1a3028', margin: '0 0 0.15rem' }}>A community that loves aviation as much as you do.</p>
-          <p style={{ fontSize: 13, fontStyle: 'italic', color: '#4d7a40', margin: '0 0 1rem', fontWeight: 500 }}>See you out there.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
-            {[
-              { icon: <ExploreIcon />, title: 'EXPLORE', text: 'Discover airports, FBOs, and points of interest.' },
-              { icon: <FieldNotesIcon />, title: 'FIELD NOTES', text: 'Read real pilot notes from the community.' },
-              { icon: <ShareIcon />, title: 'SHARE', text: 'Contribute photos and updates for fellow pilots.' },
-              { icon: <ConnectIcon />, title: 'CONNECT', text: 'Join a growing community of pilots.' },
-            ].map((f) => (
-              <div key={f.title} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                <div style={{ color: '#3a5838' }}>{f.icon}</div>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: '#1a3028' }}>{f.title}</div>
-                <p style={{ fontSize: 11, color: '#5a7060', lineHeight: 1.45, margin: 0 }}>{f.text}</p>
-              </div>
-            ))}
-          </div>
-          <div style={{ borderTop: '1px solid #d0c8bc', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 11, color: '#6a7a68' }}>© {new Date().getFullYear()} Fieldsite</span>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              {[{ label: 'Privacy', href: '/privacy' }, { label: 'Contact', href: '/contact' }, { label: 'Download', href: '/download' }].map(({ label, href }) => (
-                <Link key={href} href={href} style={{ fontSize: 11, color: '#6a7a68', textDecoration: 'none' }}>{label}</Link>
-              ))}
+        {/* Mobile tab bar */}
+        <div className="lg:hidden" style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '10px 0 14px' }}>
+          {[
+            { icon: <ExploreIcon />, label: 'Explore' },
+            { icon: <FieldNotesIcon />, label: 'Notes' },
+            { icon: <ShareIcon />, label: 'Share' },
+            { icon: <ConnectIcon />, label: 'Connect' },
+          ].map((item) => (
+            <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+              <div style={{ color: '#3a5838' }}>{item.icon}</div>
+              <span style={{ fontSize: 10, fontWeight: 600, color: '#4d6650', letterSpacing: '0.04em' }}>{item.label}</span>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
