@@ -48,7 +48,7 @@ export default function Nav() {
           style={{ color: '#fdfcf8' }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/windsock2.png" alt="" width={68} height={68} style={{ objectFit: 'contain', display: 'block' }} />
+          <img src="/windsock2.png" alt="" width={68} height={68} style={{ objectFit: 'contain', display: 'block', marginTop: 5 }} />
         </Link>
         <span
           className="lg:hidden font-semibold text-sm absolute left-1/2 -translate-x-1/2"
