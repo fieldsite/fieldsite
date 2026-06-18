@@ -95,7 +95,7 @@ function SidebarContent() {
         {/* Buttons */}
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: '1.5rem' }}>
           <a
-            href="https://apps.apple.com/app/fieldsite/id6745740360"
+            href="https://apps.apple.com/app/fieldsite/id6776333020"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 18px', borderRadius: 8, border: '1.5px solid rgba(250, 247, 240, 0.15)', color: '#1f3219', fontSize: 13, fontWeight: 600, textDecoration: 'none', background: '#fdfcf8' }}
@@ -204,7 +204,7 @@ export default function Home() {
         <div className="lg:hidden mobile-only" style={{ padding: '0.85rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
           <p style={{ fontSize: 13, fontWeight: 700, color: '#1a3028', margin: 0, lineHeight: 1.3 }}>Every airport<br />has a story.</p>
           <a
-            href="https://apps.apple.com/app/fieldsite/id6745740360"
+            href="https://apps.apple.com/app/fieldsite/id6776333020"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '9px 14px', borderRadius: 8, background: '#1a3028', color: '#fdfcf8', fontSize: 12, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}

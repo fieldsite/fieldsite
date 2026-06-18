@@ -32,7 +32,7 @@ export default function DownloadPage() {
         </div>
 
         <a
-          href="https://apps.apple.com/app/fieldsite/id6745740360"
+          href="https://apps.apple.com/app/fieldsite/id6776333020"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 px-7 py-4 rounded-2xl border transition-all hover:border-[var(--accent)] hover:bg-[var(--bg-surface)] group"
