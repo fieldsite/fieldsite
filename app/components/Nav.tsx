@@ -80,7 +80,7 @@ export default function Nav() {
         {/* Desktop Download button */}
         <div className="hidden lg:flex items-center shrink-0">
           <a
-            href="https://apps.apple.com/app/fieldsite/id6745740360"
+            href="https://apps.apple.com/app/fieldsite/id6776333020"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 text-xs font-semibold tracking-wide transition-all hover:bg-white/10"
@@ -140,7 +140,7 @@ export default function Nav() {
             </Link>
           ))}
           <a
-            href="https://apps.apple.com/app/fieldsite/id6745740360"
+            href="https://apps.apple.com/app/fieldsite/id6776333020"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileOpen(false)}
